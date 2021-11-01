@@ -1,15 +1,20 @@
 import React from 'react';
-import AuthenticationButton from "./components/AuthenticationButton";
+import {Layout} from "./components/Layout/Layout";
+import {useAuth0} from "@auth0/auth0-react";
+import LoginButton from "./components/LoginButton";
 
+const childrenAuth = () => <p>you can see content</p>
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <AuthenticationButton/>
-      </header>
-    </div>
-  );
+    const {isAuthenticated} = useAuth0()
+    return (
+        <>
+            {isAuthenticated ? <Layout>
+                {childrenAuth()}
+            </Layout> : <LoginButton/>}
+
+        </>
+    );
 }
 
 export default App;
