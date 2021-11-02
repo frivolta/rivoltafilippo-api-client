@@ -6,6 +6,7 @@ const LogoutButton = () => {
     const { logout } = useAuth0();
     return (
         <OutlineButton
+            data-testid="logout-button"
             onClick={() =>
                 logout({
                     returnTo: window.location.origin,

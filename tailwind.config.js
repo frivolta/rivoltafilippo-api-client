@@ -16,13 +16,21 @@ module.exports = {
                 secondary: "#5B6987",
                 secondaryLight: "#99A1B3",
                 secondaryLighter: "#E5E8ED",
-                secondaryDark: "#010E28"
+                secondaryDark: "#010E28",
+                altBlack: "#444444"
             },
             fontFamily: {
                 poppins: ['"Poppins"', "sans-serif"],
                 fira: ['"Fira Sans"', "sans-serif"],
             },
-            fontSize: {},
+            fontSize: {
+                h1: [
+                    "2.375rem",
+                    {
+                        lineHeight: "3.675rem",
+                    },
+                ],
+            },
         },
     },
     variants: {

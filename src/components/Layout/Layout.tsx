@@ -8,7 +8,7 @@ interface LayouProps {
 
 export const Layout = ({children}:LayouProps) => {
     return (
-        <div id="Layout">
+        <div id="Layout" data-testid="Layout">
             {/*Navigation + */}
             <nav className="flex items-center justify-between flex-wrap bg-primaryDark p-6">
                 {/*Logo + */}
@@ -19,12 +19,12 @@ export const Layout = ({children}:LayouProps) => {
                 <div className="flex gap-8">
                     {/*Action Button +*/}
                     <div className="action-button">
-                        <PrimaryButton label="Create Post +"/>
+                        <PrimaryButton label="Create Post +" data-testid="create-post-button"/>
                         <LogoutButton/>
                     </div>
                 </div>
             </nav>
-            <div className="container">
+            <div className="container mx-auto mt-16">
                 {children}
             </div>
         </div>
