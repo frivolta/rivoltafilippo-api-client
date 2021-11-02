@@ -2,7 +2,11 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
+import { render } from '@testing-library/react'
+import * as React from 'react'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import '@testing-library/jest-dom';
+import { setLogger } from 'react-query'
 import {Auth0Provider} from '@auth0/auth0-react';
 
 jest.mock('@auth0/auth0-react', () => ({
@@ -18,3 +22,15 @@ jest.mock('@auth0/auth0-react', () => ({
         }
     }
 }));
+
+
+
+// React query
+setLogger({
+    log: console.log,
+    warn: console.warn,
+    // ✅ no more errors on the console
+    error: () => {},
+})
+
+

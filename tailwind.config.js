@@ -17,7 +17,8 @@ module.exports = {
                 secondaryLight: "#99A1B3",
                 secondaryLighter: "#E5E8ED",
                 secondaryDark: "#010E28",
-                altBlack: "#444444"
+                altBlack: "#444444",
+                textBg: "#F3F5F9"
             },
             fontFamily: {
                 poppins: ['"Poppins"', "sans-serif"],

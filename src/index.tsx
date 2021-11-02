@@ -3,17 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter as Router,Switch,
-    Route,} from "react-router-dom";
+import {BrowserRouter as Router,} from "react-router-dom";
+import {QueryClient, QueryClientProvider,} from 'react-query'
+
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
+
+const queryClient = new QueryClient()
 
 ReactDOM.render(
     <React.StrictMode>
-        <Router>
-            <Auth0ProviderWithHistory>
-             <App/>
-            </Auth0ProviderWithHistory>
-        </Router>
+        <QueryClientProvider client={queryClient}>
+            <Router>
+                <Auth0ProviderWithHistory>
+                    <App/>
+                </Auth0ProviderWithHistory>
+            </Router>
+        </QueryClientProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

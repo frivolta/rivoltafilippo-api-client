@@ -9,7 +9,7 @@ interface Props{
 const Auth0ProviderWithHistory = ({ children }:Props) => {
     const domain = process.env.REACT_APP_AUTH0_DOMAIN!;
     const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID!;
-    console.log(domain, clientId)
+    const audience = process.env.REACT_APP_AUTH0_AUDIENCE!;
 
     const history = useHistory();
 
@@ -19,6 +19,7 @@ const Auth0ProviderWithHistory = ({ children }:Props) => {
 
     return (
         <Auth0Provider
+            audience={audience}
             domain={domain}
             clientId={clientId}
             redirectUri={window.location.origin}

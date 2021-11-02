@@ -6,12 +6,14 @@ import {Router} from 'react-router-dom'
 import {createMemoryHistory} from 'history'
 import App from "../App";
 import React from "react";
+import {renderWithClient} from "../testUtils";
 
 
 describe("Navigation routes", () => {
     beforeEach(() => {
         const history = createMemoryHistory({initialEntries: ['/']})
-        render(
+
+        renderWithClient(
             <Router history={history}>
                 <Auth0Provider clientId="__test_client_id__" domain="__test_domain__">
                     <App/>
