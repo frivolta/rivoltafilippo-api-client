@@ -1,13 +1,13 @@
 export interface Post {
     id: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     title: string;
     slug: string;
     content: string;
     mediumUrl?: string;
     redditUrl?: string;
-    publishedAt: Date;
+    publishedAt: string;
     img: string;
     isDraft: boolean;
 }

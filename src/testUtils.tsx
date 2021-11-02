@@ -10,6 +10,8 @@ const createTestQueryClient = () => new QueryClient({
     },
 })
 
+
+// Renderer for components
 export function renderWithClient(ui: React.ReactElement) {
     const testQueryClient = createTestQueryClient()
     const { rerender, ...result } = render(
@@ -22,4 +24,13 @@ export function renderWithClient(ui: React.ReactElement) {
                 <QueryClientProvider client={testQueryClient}>{rerenderUi}</QueryClientProvider>
             ),
     }
+}
+
+
+// Renderer for custom hooks
+export function createWrapper() {
+    const testQueryClient = createTestQueryClient()
+    return ({ children }: {children: React.ReactNode}) => (
+        <QueryClientProvider client={testQueryClient}>{children}</QueryClientProvider>
+    )
 }

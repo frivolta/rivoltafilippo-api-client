@@ -2,12 +2,13 @@ import {Layout} from "../../components/Layout/Layout";
 import React from "react";
 import {Table} from "../../components/Table";
 import {useQuery} from "react-query";
-import {getAllPosts} from "../../api/getAllPosts";
+import { useAllPosts} from "../../api/getAllPosts";
 import {Post} from "../../types/post.type";
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 export const AllPosts = () => {
 
-    const {isLoading, data: posts, isFetching} = useQuery<Post[], any>('posts', getAllPosts)
+    const {isLoading, data: posts, isFetching, isSuccess} = useAllPosts()
 
 
     return (
@@ -19,6 +20,7 @@ export const AllPosts = () => {
                            deleteAction={() => console.log('delete')}
                            posts={posts}/>
                 </div>
+                <ReactQueryDevtools initialIsOpen />
             </>
         </Layout>
     )

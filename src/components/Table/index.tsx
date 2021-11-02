@@ -10,7 +10,7 @@ interface TableRowProps {
 }
 
 const TableRow = ({children}: TableRowProps) => {
-    return <th className="py-4 px-4 font-medium">
+    return <th className="py-4 px-4 font-medium" data-testid="table-row">
         {children}
     </th>
 }
@@ -24,7 +24,7 @@ interface TableProps {
 
 export const Table = ({posts, editAction, deleteAction, isLoading}: TableProps) => {
     return (
-        <table className="w-full text-left text-primaryDark text-sm rounded-md">
+        <table className="w-full text-left text-primaryDark text-sm rounded-md" data-testid="table">
             <thead className="bg-textBg border-2 border-secondaryLighter rounded-md">
             <tr>
                 {tableHeaderFields.map((f, i) => {
@@ -36,28 +36,34 @@ export const Table = ({posts, editAction, deleteAction, isLoading}: TableProps) 
             </tr>
             </thead>
             <tbody className="bg-white border-2 border-secondaryLighter rounded-md">
-            {isLoading && <tr><td className="mx-4 my-8 font-bold text-primaryDark">Loading</td></tr>}
-            {!isLoading && posts && posts.map((post, i) => {
-                return (<tr>
-                    <TableRow>{post.id}</TableRow>
-                    <TableRow>
-                        <div className="flex">
-                            <DocumentTextIcon className="h-5 w-5 text-primaryLighter mr-2"/>
-                            <Link to={`/posts/${post.slug}`}
-                                  className="underline hover:no-underline hover:text-primaryLighter">{post.title}</Link>
-                        </div>
-                    </TableRow>
-                    <TableRow>{post.updatedAt.toLocaleString()}</TableRow>
-                    <TableRow>{post.isDraft ? "Yes" : "No"}</TableRow>
-                    <TableRow>
-                        <div className="flex">
-                            <PencilIcon className="h-5 w-5 text-primaryLighter mr-2 hover:text-primary cursor-pointer"
-                                        onClick={editAction}/>
-                            <TrashIcon className="h-5 w-5 text-primaryLighter mr-2 hover:text-primary cursor-pointer"
-                                       onClick={deleteAction}/>
-                        </div>
-                    </TableRow>
-                </tr>)
+            {isLoading && <tr>
+                <td className="mx-4 my-8 font-bold text-primaryDark">Loading</td>
+            </tr>}
+            {!isLoading && posts && posts.map((post) => {
+                return (
+                    <tr key={post.id} data-testid={`post-row-${post.id}`}>
+                        <TableRow>{post.id}</TableRow>
+                        <TableRow>
+                            <div className="flex">
+                                <DocumentTextIcon className="h-5 w-5 text-primaryLighter mr-2"/>
+                                <Link to={`/posts/${post.slug}`}
+                                      className="underline hover:no-underline hover:text-primaryLighter">{post.title}</Link>
+                            </div>
+                        </TableRow>
+                        <TableRow>{post.updatedAt.toLocaleString()}</TableRow>
+                        <TableRow>{post.isDraft ? "Yes" : "No"}</TableRow>
+                        <TableRow>
+                            <div className="flex">
+                                <PencilIcon
+                                    className="h-5 w-5 text-primaryLighter mr-2 hover:text-primary cursor-pointer"
+                                    onClick={editAction}/>
+                                <TrashIcon
+                                    className="h-5 w-5 text-primaryLighter mr-2 hover:text-primary cursor-pointer"
+                                    onClick={deleteAction}/>
+                            </div>
+                        </TableRow>
+                    </tr>
+                )
             })}
             </tbody>
         </table>

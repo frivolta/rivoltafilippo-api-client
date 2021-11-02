@@ -3,11 +3,28 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import { render } from '@testing-library/react'
-import * as React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import '@testing-library/jest-dom';
+import { rest } from 'msw'
 import { setLogger } from 'react-query'
-import {Auth0Provider} from '@auth0/auth0-react';
+import { setupServer } from 'msw/node'
+import {mockedPosts} from "./mockData/mockedPosts";
+
+export const handlers = [
+    rest.get(
+        '*/posts',
+        (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    posts: [...mockedPosts]
+                })
+            )
+        }
+    )
+]
+
+export const server = setupServer(...handlers)
+
 
 jest.mock('@auth0/auth0-react', () => ({
     Auth0Provider: ({children}: any) => children,
@@ -22,6 +39,17 @@ jest.mock('@auth0/auth0-react', () => ({
         }
     }
 }));
+
+
+// Establish API mocking before all tests.
+beforeAll(() => {
+    server.listen()
+})
+// Reset any request handlers that we may add during the tests,
+// so they don't affect other tests.
+afterEach(() => server.resetHandlers())
+// Clean up after the tests are finished.
+afterAll(() => server.close())
 
 
 
