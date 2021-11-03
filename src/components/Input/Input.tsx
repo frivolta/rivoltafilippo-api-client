@@ -3,12 +3,13 @@ import {useRef} from "react";
 
 interface FormGroupProps {
     children: React.ReactChild | React.ReactChild[]
-    width?: string;
+    half?: boolean;
+    inline?: boolean;
 }
 
-export const FormGroup = ({children}: FormGroupProps) => {
+export const FormGroup = ({children, half, inline}: FormGroupProps) => {
     return (
-        <div className="form-group w-full flex flex-col">
+        <div className={`form-group flex ${inline? 'flex-row':'flex-col'} ${half? 'w-1/2':'w-full'}`}>
             {children}
         </div>
     )

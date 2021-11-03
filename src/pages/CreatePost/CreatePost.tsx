@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MDEditor from '@uiw/react-md-editor';
 import {useCreatePostForm} from "./hooks";
+import {Toggle} from "../../components/Toggle/Toggle";
 
 
 export const CreatePost = () => {
@@ -35,19 +36,30 @@ export const CreatePost = () => {
                                    placeholder="https://www..." type="url" data-testid="post-image-field"
                                    label="Main image"/>
                         </FormGroup>
-                        <FormGroup>
-                            <label data-testid="date-label" className="text-textLight font-normal text-primary">Published
-                                date</label>
-                            <DatePicker selected={state.date.value} onChange={(date: any) => editField("date", date)}
-                                        className="my-4 p-3 w-full text-textLight font-light font-normal rounded-md border border-secondaryLighter focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent"
-                                        calendarClassName="w-full flex bg-red-500"
-                            />
-
+                        <FormGroup inline>
+                            <FormGroup half>
+                                <label data-testid="date-label" className="text-textLight font-normal text-primary">Published
+                                    date</label>
+                                <DatePicker selected={state.date.value}
+                                            onChange={(date: any) => editField("date", date)}
+                                            className="my-4 p-3 w-full text-textLight font-light font-normal rounded-md border border-secondaryLighter focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent"
+                                            calendarClassName="w-full flex bg-red-500"
+                                />
+                            </FormGroup>
+                            <FormGroup half>
+                                <div className="w-full flex justify-center align-middle gap-4 h-full items-center">
+                                <label data-testid="date-label" className="text-textLight font-normal text-primary">Uncheck to make it public!</label>
+                                <Toggle label="Uncheck to publish!" data-testid="post-isDraft-field"
+                                        checked={state.isDraft.value}
+                                        onChange={(ev) => editField("isDraft", ev.target.checked)}/>
+                                </div>
+                            </FormGroup>
                         </FormGroup>
                         <FormGroup>
                             <label data-testid="content-label"
                                    className="text-textLight font-normal text-primary">Content</label>
                             <MDEditor
+                                height={800}
                                 data-testid="post-content-field"
                                 value={state.content.value}
                                 onChange={(content) => {
@@ -57,18 +69,7 @@ export const CreatePost = () => {
                                 }}
                             />
                         </FormGroup>
-                        <FormGroup>
-                            <div
-                                className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-                                <input type="checkbox" name="toggle" id="toggle"
-                                       data-testid="post-isDraft-field"
-                                       checked={state.isDraft.value}
-                                       onChange={(ev) => editField("isDraft", ev.target.checked)}
-                                       className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition duration-200 ease-in"/>
-                                <label htmlFor="toggle"
-                                       className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition duration-200 ease-in"></label>
-                            </div>
-                        </FormGroup>
+
                     </div>
                 </div>
                 <ReactQueryDevtools initialIsOpen/>
