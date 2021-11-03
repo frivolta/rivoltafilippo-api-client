@@ -6,6 +6,7 @@ import {Auth0Provider} from "@auth0/auth0-react";
 import App from "../../App";
 import {Router} from "react-router-dom";
 import {createMemoryHistory} from "history";
+import userEvent from "@testing-library/user-event";
 
 describe("Create Post", () => {
 
@@ -26,15 +27,35 @@ describe("Create Post", () => {
         it('should show a title field', function () {
             expect(screen.getByTestId("post-title-field")).toBeInTheDocument()
         });
+        it('should show an error message if is empty', function () {
+            userEvent.type(screen.getByTestId("post-title-field"), " ")
+            expect(screen.getByText("Field is required")).toBeInTheDocument()
+        });
     })
     describe('slug field', ()=>{
         it('should show a slug field', function () {
             expect(screen.getByTestId("post-slug-field")).toBeInTheDocument()
         });
+        it('should show an error message if is empty', function () {
+            userEvent.type(screen.getByTestId("post-slug-field"), " ")
+            expect(screen.getByText("Cannot contain spaces and is required")).toBeInTheDocument()
+        });
+        it('should show an error message if is has spaces', function () {
+            userEvent.type(screen.getByTestId("post-slug-field"), "ww . w")
+            expect(screen.getByText("Cannot contain spaces and is required")).toBeInTheDocument()
+        });
     })
     describe('image field', ()=>{
         it('should show an image field', function () {
             expect(screen.getByTestId("post-image-field")).toBeInTheDocument()
+        });
+        it('should show an error message if is empty', function () {
+            userEvent.type(screen.getByTestId("post-image-field"), " ")
+            expect(screen.getByText("Cannot contain spaces and is required")).toBeInTheDocument()
+        });
+        it('should show an error message if is has spaces', function () {
+            userEvent.type(screen.getByTestId("post-image-field"), "ww . w")
+            expect(screen.getByText("Cannot contain spaces and is required")).toBeInTheDocument()
         });
     })
     describe('content field', ()=>{
@@ -45,6 +66,12 @@ describe("Create Post", () => {
     describe('isDraft field', ()=>{
         it('should show a isDraft field', function () {
             expect(screen.getByTestId("post-isDraft-field")).toBeInTheDocument()
+        });
+    })
+
+    describe('Create Post Button', ()=>{
+        it('should show a create post button', function () {
+            expect(screen.getByText(/Create Post/i)).toBeInTheDocument()
         });
     })
 })

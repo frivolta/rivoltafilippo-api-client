@@ -19,7 +19,7 @@ export const FormGroup = ({children, half, inline}: FormGroupProps) => {
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
     subLabel?: string;
-    error?: string
+    error?: string|null
 }
 
 export const Input = ({label, subLabel, error, ...props}: InputProps) => {

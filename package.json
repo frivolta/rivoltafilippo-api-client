@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
+    "@types/ramda": "^0.27.46",
     "@types/react": "^17.0.0",
     "@types/react-datepicker": "^4.1.7",
     "@types/react-dom": "^17.0.0",
@@ -20,6 +21,7 @@
     "@uiw/react-md-editor": "^3.6.5",
     "axios": "^0.24.0",
     "msw": "^0.35.0",
+    "ramda": "^0.27.1",
     "react": "^17.0.2",
     "react-datepicker": "^4.3.0",
     "react-dom": "^17.0.2",
@@ -58,7 +60,9 @@
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
-    "transformIgnorePatterns": ["node_modules/(?!@shotgunjed)/"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!@shotgunjed)/"
+    ]
   },
   "devDependencies": {
     "autoprefixer": "^9.8.8",

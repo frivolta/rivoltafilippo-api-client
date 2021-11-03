@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import MDEditor from '@uiw/react-md-editor';
 import {useCreatePostForm} from "./hooks";
 import {Toggle} from "../../components/Toggle/Toggle";
+import {FloatButton} from "../../components/Buttons/FloatButton";
 
 
 export const CreatePost = () => {
@@ -24,16 +25,19 @@ export const CreatePost = () => {
                         <FormGroup>
                             <Input value={state.title.value} onChange={(ev) => editField("title", ev.target.value)}
                                    placeholder="The best post ever..." type="text" data-testid="post-title-field"
+                                   error={state.title.error}
                                    label="Post title"/>
                         </FormGroup>
                         <FormGroup>
                             <Input value={state.slug.value} onChange={(ev) => editField("slug", ev.target.value)}
                                    placeholder="post-slug" type="text" data-testid="post-slug-field"
+                                   error={state.slug.error}
                                    label="Slug"/>
                         </FormGroup>
                         <FormGroup>
                             <Input value={state.image.value} onChange={(ev) => editField("image", ev.target.value)}
-                                   placeholder="https://www..." type="url" data-testid="post-image-field"
+                                   placeholder="https://www..." type="text" data-testid="post-image-field"
+                                   error={state.image.error}
                                    label="Main image"/>
                         </FormGroup>
                         <FormGroup inline>
@@ -68,10 +72,13 @@ export const CreatePost = () => {
                                     }
                                 }}
                             />
+                            {state.content.error ?
+                            <label data-testid="input-error" className="text-xs font-normal text-primary">{state.content.error}</label>:<></>}
                         </FormGroup>
 
                     </div>
                 </div>
+                <FloatButton label="Save Post <3" data-testid="create-post-button"/>
                 <ReactQueryDevtools initialIsOpen/>
             </>
         </Layout>

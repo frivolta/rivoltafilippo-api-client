@@ -1,31 +1,46 @@
+import * as R from 'ramda'
 import {Reducer, useReducer} from "react";
 
+type ValidationFunction = (value: string) => { valid: boolean, message: null | string }
+
 type State = {
-    title: { value: string, error: string | null }
-    slug: { value: string, error: string | null },
-    image: { value: string, error: string | null },
-    date: { value: Date, error: string | null },
-    content: { value: string, error: string | null },
-    isDraft: { value: boolean, error: string | null }
+    title: { value: string, error: string | null, validationFns: ValidationFunction }
+    slug: { value: string, error: string | null, validationFns: ValidationFunction },
+    image: { value: string, error: string | null, validationFns: ValidationFunction },
+    date: { value: Date, error: string | null, validationFns: ValidationFunction },
+    content: { value: string, error: string | null, validationFns: ValidationFunction },
+    isDraft: { value: boolean, error: string | null, validationFns: ValidationFunction }
 }
 
 type Action =
     { type: 'EDIT_FIELD', payload: { name: keyof State, value: string | boolean | Date } }
     | { type: 'CLEAR_STATE' }
 
+
+
+// Better implementation for validation fns
+const baseValidationFunction: ValidationFunction = () => ({valid: true, message: null})
+const requiredField: ValidationFunction = (v) => !R.isEmpty(R.trim(v)) ? {valid: true, message: null} : {
+    valid: false,
+    message: "Field is required"
+}
+
+const withoutSpacesAndRequired: ValidationFunction = (v)=> R.contains(" ", v) || R.isEmpty(v)?{valid: false, message: "Cannot contain spaces and is required"}:{valid:true, message:null}
+
 const initialState: State = {
-    title: {value: '', error: null},
-    slug: {value: '', error: null},
-    image: {value: '', error: null},
-    date: {value: new Date, error: null},
-    content: {value: '', error: null},
-    isDraft: {value: true, error: null}
+    title: {value: '', error: null, validationFns: requiredField},
+    slug: {value: '', error: null, validationFns: withoutSpacesAndRequired},
+    image: {value: '', error: null, validationFns: withoutSpacesAndRequired},
+    date: {value: new Date, error: null, validationFns: baseValidationFunction},
+    content: {value: '', error: null, validationFns: requiredField},
+    isDraft: {value: true, error: null, validationFns: baseValidationFunction}
 }
 
 const createPostReducer: Reducer<State, Action> = (state: State, action: Action) => {
     switch (action.type) {
         case 'EDIT_FIELD': {
-            return {...state, [action.payload.name]: {...state[action.payload.name], value: action.payload.value}}
+            const {message} = state[action.payload.name].validationFns(action.payload.value.toString())
+            return {...state, [action.payload.name]: {...state[action.payload.name], value: action.payload.value, error:message}}
         }
         case 'CLEAR_STATE': {
             return {...initialState}
