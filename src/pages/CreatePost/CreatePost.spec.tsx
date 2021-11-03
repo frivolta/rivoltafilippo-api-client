@@ -32,4 +32,19 @@ describe("Create Post", () => {
             expect(screen.getByTestId("post-slug-field")).toBeInTheDocument()
         });
     })
+    describe('image field', ()=>{
+        it('should show an image field', function () {
+            expect(screen.getByTestId("post-image-field")).toBeInTheDocument()
+        });
+    })
+    describe('content field', ()=>{
+        it('should show a content field', function () {
+            expect(screen.getByTestId("post-content-field")).toBeInTheDocument()
+        });
+    })
+    describe('isDraft field', ()=>{
+        it('should show a isDraft field', function () {
+            expect(screen.getByTestId("post-isDraft-field")).toBeInTheDocument()
+        });
+    })
 })

@@ -25,7 +25,6 @@ export const handlers = [
 
 export const server = setupServer(...handlers)
 
-
 jest.mock('@auth0/auth0-react', () => ({
     Auth0Provider: ({children}: any) => children,
     //withAuthenticationRequired: ((component:any, _) => component),
