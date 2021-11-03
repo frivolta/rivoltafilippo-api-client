@@ -18,7 +18,9 @@ module.exports = {
                 secondaryLighter: "#E5E8ED",
                 secondaryDark: "#010E28",
                 altBlack: "#444444",
-                textBg: "#F3F5F9"
+                altWhite: "#f1f1f1",
+                textBg: "#F3F5F9",
+                textLight: "#676767"
             },
             fontFamily: {
                 poppins: ['"Poppins"', "sans-serif"],
@@ -39,5 +41,9 @@ module.exports = {
             padding: ["first, last"],
         },
     },
-    plugins: [],
+    plugins: [
+        require("@tailwindcss/forms")({
+            strategy: 'class',
+        }),
+    ],
 };

@@ -4,22 +4,25 @@ import {Auth0Provider} from '@auth0/auth0-react';
 import userEvent from '@testing-library/user-event'
 import "@testing-library/jest-dom/extend-expect";
 
-jest.mock('@auth0/auth0-react', () => ({
-    Auth0Provider: ({ children }:any) => children,
-    //withAuthenticationRequired: ((component:any, _) => component),
-    useAuth0: () => {
-        return {
-            isLoading: false,
-            user: { sub: "foobar" },
-            isAuthenticated: true,
-            loginWithRedirect: jest.fn(),
-            logout: mockLogout
+let mockLogout = jest.fn()
+jest.mock('@auth0/auth0-react', () => {
+
+    return {
+        Auth0Provider: ({children}: any) => children,
+        //withAuthenticationRequired: ((component:any, _) => component),
+        useAuth0: () => {
+            return {
+                isLoading: false,
+                user: {sub: "foobar"},
+                isAuthenticated: true,
+                loginWithRedirect: jest.fn(),
+                logout: mockLogout
+            }
         }
     }
-}));
+});
 
 
-let mockLogout = jest.fn()
 
 describe("<Layout/>", () => {
     beforeEach(() => {

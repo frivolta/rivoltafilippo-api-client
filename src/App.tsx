@@ -4,6 +4,7 @@ import LoginButton from "./components/LoginButton";
 import {Route, Switch} from "react-router-dom";
 import {AllPosts} from "./pages/AllPosts/AllPosts";
 import axios from "axios";
+import {CreatePost} from "./pages/CreatePost/CreatePost";
 
 function App() {
     const {isAuthenticated, getAccessTokenSilently} = useAuth0()
@@ -31,8 +32,11 @@ function App() {
                 isAuthenticated
                     ? (
                         <Switch>
-                            <Route path="/">
+                            <Route exact path="/">
                               <AllPosts/>
+                            </Route>
+                            <Route exact path="/posts/create">
+                                <CreatePost/>
                             </Route>
                         </Switch>)
                     :
