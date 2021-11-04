@@ -15,8 +15,11 @@ export const CreatePost = () => {
     const {state, actions} = useCreatePostForm()
     const {mutate} = useCreatePost()
 
-    const handleCreatePost = ()=>{
-        mutate({...actions.getPayload()})
+    const handleCreatePost = () => {
+        const isValid = actions.validateForm()
+        if (isValid) {
+            mutate({...actions.getPayload()})
+        }
     }
 
     const {editField} = actions
@@ -58,10 +61,11 @@ export const CreatePost = () => {
                             </FormGroup>
                             <FormGroup half>
                                 <div className="w-full flex justify-center align-middle gap-4 h-full items-center">
-                                <label data-testid="date-label" className="text-textLight font-normal text-primary">Uncheck to make it public!</label>
-                                <Toggle label="Uncheck to publish!" data-testid="post-isDraft-field"
-                                        checked={state.isDraft.value}
-                                        onChange={(ev) => editField("isDraft", ev.target.checked)}/>
+                                    <label data-testid="date-label" className="text-textLight font-normal text-primary">Uncheck
+                                        to make it public!</label>
+                                    <Toggle label="Uncheck to publish!" data-testid="post-isDraft-field"
+                                            checked={state.isDraft.value}
+                                            onChange={(ev) => editField("isDraft", ev.target.checked)}/>
                                 </div>
                             </FormGroup>
                         </FormGroup>
@@ -79,7 +83,8 @@ export const CreatePost = () => {
                                 }}
                             />
                             {state.content.error ?
-                            <label data-testid="input-error" className="text-xs font-normal text-primary">{state.content.error}</label>:<></>}
+                                <label data-testid="input-error"
+                                       className="text-xs font-normal text-primary">{state.content.error}</label> : <></>}
                         </FormGroup>
 
                     </div>

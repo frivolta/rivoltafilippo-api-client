@@ -15,7 +15,7 @@ type State = {
 
 type Action =
     { type: 'EDIT_FIELD', payload: { name: keyof State, value: string | boolean | Date } }
-    | { type: 'CLEAR_STATE' }
+    | { type: 'CLEAR_STATE' } | {type: 'VALIDATE_FIELDS'}
 
 
 // Better implementation for validation fns
@@ -39,6 +39,13 @@ const initialState: State = {
     isDraft: {value: true, error: null, validationFns: baseValidationFunction}
 }
 
+const validateState =(state:State)=>(Object.keys(state) as Array<keyof State>).reduce<State>((newState, currKey)=>{
+    return {...newState, [currKey]: {...state[currKey], error: state[currKey].validationFns(state[currKey].value.toString()).message}}
+},{...state})
+
+const isValidState = (state:State) => !Object.values(validateState(state)).some(value=>value.error!==null)
+
+
 const createPostReducer: Reducer<State, Action> = (state: State, action: Action) => {
     switch (action.type) {
         case 'EDIT_FIELD': {
@@ -47,6 +54,10 @@ const createPostReducer: Reducer<State, Action> = (state: State, action: Action)
                 ...state,
                 [action.payload.name]: {...state[action.payload.name], value: action.payload.value, error: message}
             }
+        }
+        case 'VALIDATE_FIELDS':{
+            const validatedState = validateState(state)
+            return {...validatedState}
         }
         case 'CLEAR_STATE': {
             return {...initialState}
@@ -76,6 +87,12 @@ export const useCreatePostForm = () => {
         isDraft:state.isDraft.value
     })
 
+    const _validateValues = ()=>{
+        dispatch({
+            type: 'VALIDATE_FIELDS'
+        })
+        return isValidState(state)
+    }
 
-    return {state, actions: {editField, getPayload: _getPayload}}
+    return {state, actions: {editField, getPayload: _getPayload, validateForm: _validateValues}}
 }
