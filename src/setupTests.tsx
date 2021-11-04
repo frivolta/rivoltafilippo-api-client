@@ -8,6 +8,7 @@ import { rest } from 'msw'
 import { setLogger } from 'react-query'
 import { setupServer } from 'msw/node'
 import {mockedPosts} from "./mockData/mockedPosts";
+import {body} from "msw/lib/types/context";
 
 export const handlers = [
     rest.get(
@@ -20,7 +21,15 @@ export const handlers = [
                 })
             )
         }
-    )
+    ),
+    rest.post('*/posts', (req,res,ctx)=>{
+        return res(
+            ctx.status(200),
+            ctx.json({
+                post: mockedPosts[0]
+            })
+        )
+    })
 ]
 
 export const server = setupServer(...handlers)
