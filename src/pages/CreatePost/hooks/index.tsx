@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import {Reducer, useReducer} from "react";
+import {CreatePostInput} from "../../../types/post.type";
 
 type ValidationFunction = (value: string) => { valid: boolean, message: null | string }
 
@@ -17,7 +18,6 @@ type Action =
     | { type: 'CLEAR_STATE' }
 
 
-
 // Better implementation for validation fns
 const baseValidationFunction: ValidationFunction = () => ({valid: true, message: null})
 const requiredField: ValidationFunction = (v) => !R.isEmpty(R.trim(v)) ? {valid: true, message: null} : {
@@ -25,7 +25,10 @@ const requiredField: ValidationFunction = (v) => !R.isEmpty(R.trim(v)) ? {valid:
     message: "Field is required"
 }
 
-const withoutSpacesAndRequired: ValidationFunction = (v)=> R.contains(" ", v) || R.isEmpty(v)?{valid: false, message: "Cannot contain spaces and is required"}:{valid:true, message:null}
+const withoutSpacesAndRequired: ValidationFunction = (v) => R.contains(" ", v) || R.isEmpty(v) ? {
+    valid: false,
+    message: "Cannot contain spaces and is required"
+} : {valid: true, message: null}
 
 const initialState: State = {
     title: {value: '', error: null, validationFns: requiredField},
@@ -40,7 +43,10 @@ const createPostReducer: Reducer<State, Action> = (state: State, action: Action)
     switch (action.type) {
         case 'EDIT_FIELD': {
             const {message} = state[action.payload.name].validationFns(action.payload.value.toString())
-            return {...state, [action.payload.name]: {...state[action.payload.name], value: action.payload.value, error:message}}
+            return {
+                ...state,
+                [action.payload.name]: {...state[action.payload.name], value: action.payload.value, error: message}
+            }
         }
         case 'CLEAR_STATE': {
             return {...initialState}
@@ -59,5 +65,17 @@ export const useCreatePostForm = () => {
             value: fValue
         }
     })
-    return {state, actions: {editField}}
+
+    // Update using reduce
+    const _getPayload = (): CreatePostInput => ({
+        title: state.title.value,
+        slug: state.slug.value,
+        content:state.content.value,
+        publishedAt: state.date.value,
+        img: state.image.value,
+        isDraft:state.isDraft.value
+    })
+
+
+    return {state, actions: {editField, getPayload: _getPayload}}
 }

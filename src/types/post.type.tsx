@@ -11,3 +11,7 @@ export interface Post {
     img: string;
     isDraft: boolean;
 }
+
+export interface CreatePostInput extends Omit<Post, "createdAt"|"publishedAt"|"updatedAt"|"id">{
+    publishedAt: Date
+}

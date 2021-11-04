@@ -8,10 +8,16 @@ import MDEditor from '@uiw/react-md-editor';
 import {useCreatePostForm} from "./hooks";
 import {Toggle} from "../../components/Toggle/Toggle";
 import {FloatButton} from "../../components/Buttons/FloatButton";
+import {useCreatePost} from "../../api/createPost";
 
 
 export const CreatePost = () => {
     const {state, actions} = useCreatePostForm()
+    const {mutate} = useCreatePost()
+
+    const handleCreatePost = ()=>{
+        mutate({...actions.getPayload()})
+    }
 
     const {editField} = actions
     return (
@@ -78,7 +84,7 @@ export const CreatePost = () => {
 
                     </div>
                 </div>
-                <FloatButton label="Save Post <3" data-testid="create-post-button"/>
+                <FloatButton label="Save Post <3" data-testid="create-post-button" onClick={handleCreatePost}/>
                 <ReactQueryDevtools initialIsOpen/>
             </>
         </Layout>
