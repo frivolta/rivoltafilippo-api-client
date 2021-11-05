@@ -15,3 +15,7 @@ export interface Post {
 export interface CreatePostInput extends Omit<Post, "createdAt"|"publishedAt"|"updatedAt"|"id">{
     publishedAt: Date
 }
+
+export interface GetPostInput {
+    id: string | number
+}

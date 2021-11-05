@@ -30,4 +30,15 @@ describe("Navigation routes", () => {
         fireEvent.click(createPostButton)
         await expect(screen.getByTestId("create-post-title")).toBeInTheDocument()
     })
+    it('should get the edit post page', ()=>{
+        const history = createMemoryHistory({initialEntries: ['/posts/postId']})
+        renderWithClient(
+            <Router history={history}>
+                <Auth0Provider clientId="__test_client_id__" domain="__test_domain__">
+                    <App/>
+                </Auth0Provider>
+            </Router>
+        )
+        expect(screen.getByTestId("edit-post-title")).toBeInTheDocument()
+    })
 })

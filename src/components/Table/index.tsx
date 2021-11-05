@@ -46,7 +46,7 @@ export const Table = ({posts, editAction, deleteAction, isLoading}: TableProps) 
                         <TableRow>
                             <div className="flex">
                                 <DocumentTextIcon className="h-5 w-5 text-primaryLighter mr-2"/>
-                                <Link to={`/posts/${post.slug}`}
+                                <Link to={`/posts/${post.id}`}
                                       className="underline hover:no-underline hover:text-primaryLighter">{post.title}</Link>
                             </div>
                         </TableRow>

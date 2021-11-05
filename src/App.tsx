@@ -5,6 +5,7 @@ import {Route, Switch} from "react-router-dom";
 import {AllPosts} from "./pages/AllPosts/AllPosts";
 import axios from "axios";
 import {CreatePost} from "./pages/CreatePost/CreatePost";
+import {SeePost} from "./pages/SeePost/SeePost";
 
 function App() {
     const {isAuthenticated, getAccessTokenSilently} = useAuth0()
@@ -37,6 +38,9 @@ function App() {
                             </Route>
                             <Route exact path="/posts/create">
                                 <CreatePost/>
+                            </Route>
+                            <Route exact path="/posts/:id">
+                                <SeePost/>
                             </Route>
                         </Switch>)
                     :

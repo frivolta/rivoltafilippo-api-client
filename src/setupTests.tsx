@@ -22,6 +22,17 @@ export const handlers = [
             )
         }
     ),
+    rest.get(
+        '*/posts/1',
+        (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    post: mockedPosts[0]
+                })
+            )
+        }
+    ),
     rest.post('*/posts', (req,res,ctx)=>{
         return res(
             ctx.status(200),

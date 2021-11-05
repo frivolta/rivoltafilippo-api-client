@@ -1,10 +1,10 @@
 import * as R from 'ramda'
 import {Reducer, useReducer} from "react";
-import {CreatePostInput} from "../../../types/post.type";
+import {CreatePostInput, Post} from "../types/post.type";
 
 type ValidationFunction = (value: string) => { valid: boolean, message: null | string }
 
-type State = {
+export type FormState = {
     title: { value: string, error: string | null, validationFns: ValidationFunction }
     slug: { value: string, error: string | null, validationFns: ValidationFunction },
     image: { value: string, error: string | null, validationFns: ValidationFunction },
@@ -14,8 +14,8 @@ type State = {
 }
 
 type Action =
-    { type: 'EDIT_FIELD', payload: { name: keyof State, value: string | boolean | Date } }
-    | { type: 'CLEAR_STATE' } | {type: 'VALIDATE_FIELDS'}
+    { type: 'EDIT_FIELD', payload: { name: keyof FormState, value: string | boolean | Date } }
+    | { type: 'CLEAR_STATE' } | {type: 'VALIDATE_FIELDS'} | {type: 'INIT_STATE', payload: {post: Post}}
 
 
 // Better implementation for validation fns
@@ -30,7 +30,7 @@ const withoutSpacesAndRequired: ValidationFunction = (v) => R.contains(" ", v) |
     message: "Cannot contain spaces and is required"
 } : {valid: true, message: null}
 
-const initialState: State = {
+const initialFormState: FormState = {
     title: {value: '', error: null, validationFns: requiredField},
     slug: {value: '', error: null, validationFns: withoutSpacesAndRequired},
     image: {value: '', error: null, validationFns: withoutSpacesAndRequired},
@@ -39,14 +39,14 @@ const initialState: State = {
     isDraft: {value: true, error: null, validationFns: baseValidationFunction}
 }
 
-const validateState =(state:State)=>(Object.keys(state) as Array<keyof State>).reduce<State>((newState, currKey)=>{
-    return {...newState, [currKey]: {...state[currKey], error: state[currKey].validationFns(state[currKey].value.toString()).message}}
+const validateFormState =(state:FormState)=>(Object.keys(state) as Array<keyof FormState>).reduce<FormState>((newFormState, currKey)=>{
+    return {...newFormState, [currKey]: {...state[currKey], error: state[currKey].validationFns(state[currKey].value.toString()).message}}
 },{...state})
 
-const isValidState = (state:State) => !Object.values(validateState(state)).some(value=>value.error!==null)
+const isValidFormState = (state:FormState) => !Object.values(validateFormState(state)).some(value=>value.error!==null)
 
 
-const createPostReducer: Reducer<State, Action> = (state: State, action: Action) => {
+const createPostReducer: Reducer<FormState, Action> = (state: FormState, action: Action) => {
     switch (action.type) {
         case 'EDIT_FIELD': {
             const {message} = state[action.payload.name].validationFns(action.payload.value.toString())
@@ -56,25 +56,41 @@ const createPostReducer: Reducer<State, Action> = (state: State, action: Action)
             }
         }
         case 'VALIDATE_FIELDS':{
-            const validatedState = validateState(state)
-            return {...validatedState}
+            const validatedFormState = validateFormState(state)
+            return {...validatedFormState}
         }
         case 'CLEAR_STATE': {
-            return {...initialState}
+            return {...initialFormState}
+        }
+        case 'INIT_STATE':{
+            const {post} = action.payload
+            return {
+                title: {...initialFormState.title, value: post.title},
+                slug: {...initialFormState.slug, value: post.slug},
+                image: {...initialFormState.image, value: post.img},
+                date: {...initialFormState.date, value: new Date()},
+                content: {...initialFormState.content, value: post.content},
+                isDraft: {...initialFormState.isDraft, value: post.isDraft}
+            }
         }
         default:
             return state
     }
 }
 
-export const useCreatePostForm = () => {
-    const [state, dispatch] = useReducer(createPostReducer, initialState)
-    const editField = (fName: keyof State, fValue: string | boolean | Date) => dispatch({
+export const usePostForm = () => {
+    const [state, dispatch] = useReducer(createPostReducer, initialFormState)
+    const editField = (fName: keyof FormState, fValue: string | boolean | Date) => dispatch({
         type: 'EDIT_FIELD',
         payload: {
             name: fName,
             value: fValue
         }
+    })
+
+    const initState = (post: Post)=>dispatch({
+        type: 'INIT_STATE',
+        payload: {post}
     })
 
     // Update using reduce
@@ -91,8 +107,8 @@ export const useCreatePostForm = () => {
         dispatch({
             type: 'VALIDATE_FIELDS'
         })
-        return isValidState(state)
+        return isValidFormState(state)
     }
 
-    return {state, actions: {editField, getPayload: _getPayload, validateForm: _validateValues}}
+    return {state, actions: {editField, initState, getPayload: _getPayload, validateForm: _validateValues}}
 }

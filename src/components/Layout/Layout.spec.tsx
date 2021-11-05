@@ -3,6 +3,7 @@ import {render, screen} from "@testing-library/react";
 import {Auth0Provider} from '@auth0/auth0-react';
 import userEvent from '@testing-library/user-event'
 import "@testing-library/jest-dom/extend-expect";
+import { mocked } from 'ts-jest/utils';
 
 let mockLogout = jest.fn()
 jest.mock('@auth0/auth0-react', () => {
