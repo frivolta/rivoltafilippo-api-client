@@ -10,7 +10,7 @@ export const mockedPosts: Post[] = [
         content: "Lorem ipsum content",
         mediumUrl: "https://www.rivoltafilippo.com",
         redditUrl: "https://www.rivoltafilippo.com",
-        publishedAt:"2021-11-01",
+        publishedAt: "2021-11-01",
         img: "https://www.rivoltafilippo.com/content.jpg",
         isDraft: true
     },
@@ -28,3 +28,19 @@ export const mockedPosts: Post[] = [
         isDraft: true
     }
 ]
+
+
+export const updatePostResult: Post = {
+    id: 1,
+    createdAt: "2022-10-30T21:13:59.603Z",
+    updatedAt: "2021-10-30T21:13:59.603Z",
+    title: "new post title",
+    slug: "lorem-ipsum-title",
+    content: "Lorem ipsum content",
+    mediumUrl: "https://www.rivoltafilippo.com",
+    redditUrl: "https://www.rivoltafilippo.com",
+    publishedAt: "2021-11-01",
+    img: "https://www.rivoltafilippo.com/content.jpg",
+    isDraft: true
+}
+

@@ -16,6 +16,10 @@ export interface CreatePostInput extends Omit<Post, "createdAt"|"publishedAt"|"u
     publishedAt: Date
 }
 
+export interface UpdatePostInput extends Omit<Post, "createdAt"|"publishedAt"|"updatedAt">{
+    publishedAt: Date
+}
+
 export interface GetPostInput {
     id: string | number
 }

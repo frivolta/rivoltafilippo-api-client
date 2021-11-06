@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import { rest } from 'msw'
 import { setLogger } from 'react-query'
 import { setupServer } from 'msw/node'
-import {mockedPosts} from "./mockData/mockedPosts";
+import {mockedPosts, updatePostResult} from "./mockData/mockedPosts";
 import {body} from "msw/lib/types/context";
 
 export const handlers = [
@@ -29,6 +29,17 @@ export const handlers = [
                 ctx.status(200),
                 ctx.json({
                     post: mockedPosts[0]
+                })
+            )
+        }
+    ),
+    rest.put(
+        '*/posts/1',
+        (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    ...updatePostResult
                 })
             )
         }
