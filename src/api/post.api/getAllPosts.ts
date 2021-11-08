@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Post} from "../types/post.type";
+import {Post} from "../../types/post.type";
 import {useQuery} from "react-query";
 
 interface GetAllPostsApi {
@@ -7,10 +7,10 @@ interface GetAllPostsApi {
 }
 
 export const fetchAllPosts = async (): Promise<Post[]> => {
-    const {data} = await axios.get<GetAllPostsApi>('http://localhost:3000/posts')
+    const {data} = await axios.get<GetAllPostsApi>(`${process.env.REACT_APP_API_URL}/posts`)
     return data.posts
 }
 
-export function useAllPosts(){
+export function useAllPosts() {
     return useQuery('posts', fetchAllPosts)
 }

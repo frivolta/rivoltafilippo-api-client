@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {renderHook} from '@testing-library/react-hooks'
-import {createWrapper} from "../testUtils";
-import {mockedPosts, updatePostResult} from "../mockData/mockedPosts";
-import {UpdatePostInput} from "../types/post.type";
+import {createWrapper} from "../../testUtils";
+import {mockedPosts, updatePostResult} from "../../mockData/mockedPosts";
+import {UpdatePostInput} from "../../types/post.type";
 import {useUpdatePost} from "./updatePost";
 
 const mockedMutationVariables: UpdatePostInput = {

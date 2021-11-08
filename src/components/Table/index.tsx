@@ -17,8 +17,8 @@ const TableRow = ({children}: TableRowProps) => {
 
 interface TableProps {
     posts?: Post[]
-    editAction: (id:number) => void;
-    deleteAction: () => void;
+    editAction: (id: number) => void;
+    deleteAction: (id: number) => void;
     isLoading: boolean
 }
 
@@ -56,10 +56,11 @@ export const Table = ({posts, editAction, deleteAction, isLoading}: TableProps) 
                             <div className="flex">
                                 <PencilIcon
                                     className="h-5 w-5 text-primaryLighter mr-2 hover:text-primary cursor-pointer"
-                                    onClick={()=>editAction(post.id)}/>
+                                    onClick={() => editAction(post.id)}/>
                                 <TrashIcon
+                                    data-testid="delete-post-action"
                                     className="h-5 w-5 text-primaryLighter mr-2 hover:text-primary cursor-pointer"
-                                    onClick={deleteAction}/>
+                                    onClick={() => deleteAction(post.id)}/>
                             </div>
                         </TableRow>
                     </tr>

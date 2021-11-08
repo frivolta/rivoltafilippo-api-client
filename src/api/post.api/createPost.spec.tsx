@@ -1,9 +1,9 @@
 import * as React from 'react'
 import {renderHook} from '@testing-library/react-hooks'
-import {createWrapper} from "../testUtils";
-import {mockedPosts} from "../mockData/mockedPosts";
+import {createWrapper} from "../../testUtils";
+import {mockedPosts} from "../../mockData/mockedPosts";
 import {useCreatePost} from "./createPost";
-import {CreatePostInput} from "../types/post.type";
+import {CreatePostInput} from "../../types/post.type";
 
 const mockedMutationVariables: CreatePostInput = {
     title: "post title",
