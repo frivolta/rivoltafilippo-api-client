@@ -1,3 +1,5 @@
+import {Author} from "./Author.type";
+
 export interface Post {
     id: number;
     createdAt: string;
@@ -11,6 +13,7 @@ export interface Post {
     publishedAt: string;
     img: string;
     isDraft: boolean;
+    author?: Author
 }
 
 export interface CreatePostInput extends Omit<Post, "createdAt" | "updatedAt" | "id"> {

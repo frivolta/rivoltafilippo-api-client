@@ -9,8 +9,22 @@ import {setLogger} from 'react-query'
 import {setupServer} from 'msw/node'
 import {mockedPosts, updatePostResult} from "./mockData/mockedPosts";
 import {body} from "msw/lib/types/context";
+import {mockedAuthors} from "./mockData/mockedAuthors";
 
 export const handlers = [
+    //Authors
+    rest.get(
+        '*/author',
+        (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    authors: [...mockedAuthors]
+                })
+            )
+        }
+    ),
+    //Posts
     rest.get(
         '*/posts',
         (req, res, ctx) => {

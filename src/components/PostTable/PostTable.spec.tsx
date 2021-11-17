@@ -9,9 +9,12 @@ const postAction = jest.fn()
 
 const mockedState: FormState = {
     title: {value: '', error: null, validationFns: validateFn},
+    excerpt: {value: '', error: null, validationFns: validateFn},
     slug: {value: '', error: null, validationFns: validateFn},
+    redditUrl: {value: '', error: null, validationFns: validateFn},
+    mediumUrl: {value: '', error: null, validationFns: validateFn},
     image: {value: '', error: null, validationFns: validateFn},
-    date: {value: new Date, error: null, validationFns: validateFn},
+    date: {value: new Date(), error: null, validationFns: validateFn},
     content: {value: '', error: null, validationFns: validateFn},
     isDraft: {value: true, error: null, validationFns: validateFn}
 }
@@ -36,7 +39,7 @@ describe('<PostTable/>', function () {
         expect(screen.getByText("it is an error")).toBeInTheDocument()
     })
 
-    it("should trigger a fn when the submit button is clicked", ()=>{
+    it("should trigger a fn when the submit button is clicked", () => {
         userEvent.click(screen.getByTestId(("create-post-button")))
         expect(postAction).toHaveBeenCalledTimes(1)
     })

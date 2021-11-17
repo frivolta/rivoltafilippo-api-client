@@ -19,11 +19,11 @@ describe("Create Post", () => {
                 </Auth0Provider>
             </Router>)
     })
-    it('should be defined', ()=> {
+    it('should be defined', () => {
         expect(screen.getByTestId("create-post-title")).toBeInTheDocument()
     });
 
-    describe('title field', ()=>{
+    describe('title field', () => {
         it('should show a title field', function () {
             expect(screen.getByTestId("post-title-field")).toBeInTheDocument()
         });
@@ -32,7 +32,7 @@ describe("Create Post", () => {
             expect(screen.getByText("Field is required")).toBeInTheDocument()
         });
     })
-    describe('slug field', ()=>{
+    describe('slug field', () => {
         it('should show a slug field', function () {
             expect(screen.getByTestId("post-slug-field")).toBeInTheDocument()
         });
@@ -45,7 +45,7 @@ describe("Create Post", () => {
             expect(screen.getByText("Cannot contain spaces and is required")).toBeInTheDocument()
         });
     })
-    describe('image field', ()=>{
+    describe('image field', () => {
         it('should show an image field', function () {
             expect(screen.getByTestId("post-image-field")).toBeInTheDocument()
         });
@@ -58,18 +58,27 @@ describe("Create Post", () => {
             expect(screen.getByText("Cannot contain spaces and is required")).toBeInTheDocument()
         });
     })
-    describe('content field', ()=>{
+    describe('content field', () => {
         it('should show a content field', function () {
             expect(screen.getByTestId("post-content-field")).toBeInTheDocument()
         });
     })
-    describe('isDraft field', ()=>{
+    describe('isDraft field', () => {
         it('should show a isDraft field', function () {
             expect(screen.getByTestId("post-isDraft-field")).toBeInTheDocument()
         });
     })
 
-    describe('Create Post Button', ()=>{
+    describe("medium reddit fields", () => {
+        it('should show a medium url field', function () {
+            expect(screen.getByTestId("post-mediumUrl-field")).toBeInTheDocument()
+        });
+        it('should show a reddi url field', function () {
+            expect(screen.getByTestId("post-redditUrl-field")).toBeInTheDocument()
+        });
+    })
+
+    describe('Create Post Button', () => {
         it('should show a create post button', function () {
             expect(screen.getByText(/Create Post/i)).toBeInTheDocument()
         });

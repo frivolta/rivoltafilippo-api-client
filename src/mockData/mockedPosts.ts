@@ -1,4 +1,6 @@
 import {Post} from "../types/post.type";
+import {Author} from "../types/Author.type";
+import {mockedAuthor} from "./mockedAuthors";
 
 export const mockedPosts: Post[] = [
     {
@@ -11,9 +13,10 @@ export const mockedPosts: Post[] = [
         content: "Lorem ipsum content",
         mediumUrl: "https://www.rivoltafilippo.com",
         redditUrl: "https://www.rivoltafilippo.com",
-        publishedAt: "2021-11-01",
+        publishedAt: "01/11/2021",
         img: "https://www.rivoltafilippo.com/content.jpg",
-        isDraft: true
+        isDraft: true,
+        author: {...mockedAuthor, posts: []}
     },
     {
         id: 4,
@@ -24,13 +27,13 @@ export const mockedPosts: Post[] = [
         slug: "lorem-ipsum-title-2",
         content: "Lorem ipsum content",
         mediumUrl: "https://www.rivoltafilippo.com",
-        publishedAt: "2021-11-01",
+        publishedAt: "01/11/2021",
         redditUrl: "https://www.rivoltafilippo.com",
         img: "https://www.rivoltafilippo.com/content.jpg",
-        isDraft: true
+        isDraft: true,
+        author: {...mockedAuthor, posts: []}
     }
 ]
-
 
 export const updatePostResult: Post = {
     id: 1,
@@ -42,8 +45,9 @@ export const updatePostResult: Post = {
     content: "Lorem ipsum content",
     mediumUrl: "https://www.rivoltafilippo.com",
     redditUrl: "https://www.rivoltafilippo.com",
-    publishedAt: "2021-11-01",
+    publishedAt: "01/11/2021",
     img: "https://www.rivoltafilippo.com/content.jpg",
-    isDraft: true
+    isDraft: true,
+    author: {...mockedAuthor, posts: []}
 }
 

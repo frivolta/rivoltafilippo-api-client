@@ -61,6 +61,20 @@ export const PostTable = ({state, editField, postAction}: PostTableProps) => {
                     </div>
                 </FormGroup>
             </FormGroup>
+            <FormGroup inline>
+                <FormGroup half>
+                    <Input value={state.mediumUrl.value} onChange={(ev) => editField("mediumUrl", ev.target.value)}
+                           placeholder="https://www..." type="text" data-testid="post-mediumUrl-field"
+                           error={state.mediumUrl.error}
+                           label="Medium Url"/>
+                </FormGroup>
+                <FormGroup half>
+                    <Input value={state.redditUrl.value} onChange={(ev) => editField("redditUrl", ev.target.value)}
+                           placeholder="https://www..." type="text" data-testid="post-redditUrl-field"
+                           error={state.redditUrl.error}
+                           label="Reddit Url"/>
+                </FormGroup>
+            </FormGroup>
             <FormGroup>
                 <label data-testid="content-label"
                        className="text-textLight font-normal text-primary">Content</label>

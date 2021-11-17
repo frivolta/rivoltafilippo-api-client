@@ -9,6 +9,7 @@ import {useParams} from "react-router";
 import {usePost} from "../../api/post.api/getPost";
 import {usePostForm} from "../../hooks/useForm";
 import {useUpdatePost} from "../../api/post.api/updatePost";
+import {useAllAuthors} from "../../api/author.api/getAllAuthors";
 
 interface SeePostParams {
     id: string
@@ -19,6 +20,8 @@ export const SeePost = () => {
     const {data, isFetching} = usePost({id})
     const {mutate} = useUpdatePost()
     const {state, actions} = usePostForm()
+    const {data: authors} = useAllAuthors()
+
 
     React.useEffect(() => {
         if (data) {

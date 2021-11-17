@@ -7,7 +7,9 @@ type ValidationFunction = (value: string) => { valid: boolean, message: null | s
 
 export type FormState = {
     title: { value: string, error: string | null, validationFns: ValidationFunction }
-    excerpt: { value: string, error: string | null, validationFns: ValidationFunction }
+    excerpt: { value: string, error: string | null, validationFns: ValidationFunction },
+    mediumUrl: { value: string, error: string | null, validationFns: ValidationFunction },
+    redditUrl: { value: string, error: string | null, validationFns: ValidationFunction },
     slug: { value: string, error: string | null, validationFns: ValidationFunction },
     image: { value: string, error: string | null, validationFns: ValidationFunction },
     date: { value: Date, error: string | null, validationFns: ValidationFunction },
@@ -32,10 +34,18 @@ const withoutSpacesAndRequired: ValidationFunction = (v) => R.contains(" ", v) |
     message: "Cannot contain spaces and is required"
 } : {valid: true, message: null}
 
+const withoutSpaces: ValidationFunction = (v: string) => R.contains(' ', v) ? {
+    valid: false,
+    message: "Cannot contain spaces"
+} : {valid: true, message: null}
+
+
 const initialFormState: FormState = {
     title: {value: '', error: null, validationFns: requiredField},
     excerpt: {value: '', error: null, validationFns: requiredField},
     slug: {value: '', error: null, validationFns: withoutSpacesAndRequired},
+    mediumUrl: {value: '', error: null, validationFns: withoutSpaces},
+    redditUrl: {value: '', error: null, validationFns: withoutSpaces},
     image: {value: '', error: null, validationFns: withoutSpacesAndRequired},
     date: {value: new Date(), error: null, validationFns: baseValidationFunction},
     content: {value: '', error: null, validationFns: requiredField},
@@ -74,6 +84,8 @@ const createPostReducer: Reducer<FormState, Action> = (state: FormState, action:
                 title: {...initialFormState.title, value: post.title},
                 excerpt: {...initialFormState.title, value: post.title},
                 slug: {...initialFormState.slug, value: post.slug},
+                mediumUrl: {...initialFormState.mediumUrl, value: post.mediumUrl ?? ''},
+                redditUrl: {...initialFormState.redditUrl, value: post.redditUrl ?? ''},
                 image: {...initialFormState.image, value: post.img},
                 date: {...initialFormState.date, value: stringToDate(post.publishedAt)},
                 content: {...initialFormState.content, value: post.content},
@@ -108,7 +120,9 @@ export const usePostForm = () => {
         content: state.content.value,
         publishedAt: dateToString(state.date.value),
         img: state.image.value,
-        isDraft: state.isDraft.value
+        isDraft: state.isDraft.value,
+        ...(!R.isEmpty(state.mediumUrl.value) && {mediumUrl: state.mediumUrl.value}),
+        ...(!R.isEmpty(state.redditUrl.value) && {redditUrl: state.redditUrl.value})
     })
 
     const _validateValues = () => {

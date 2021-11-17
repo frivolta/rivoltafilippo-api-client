@@ -5,11 +5,15 @@ import {useAllPosts} from "../../api/post.api/getAllPosts";
 import {ReactQueryDevtools} from 'react-query/devtools';
 import {useHistory} from "react-router-dom";
 import {useDeletePost} from "../../api/post.api/deletePost";
+import {AuthorTable} from "../../components/AuthorTable/AuthorTable";
+import {useAllAuthors} from "../../api/author.api/getAllAuthors";
 
 export const AllPosts = () => {
     const history = useHistory()
     const {mutate} = useDeletePost()
     const {isLoading, data: posts, isFetching} = useAllPosts()
+
+    const {isLoading: isLoadingAuthors, data: authors, isFetching: isFetchingAuthors} = useAllAuthors()
 
     const editAction = (id: number) => history.push(`/posts/${id}`)
     const deleteAction = (id: number) => mutate({id})
@@ -22,6 +26,9 @@ export const AllPosts = () => {
                     <Table isLoading={isLoading || isFetching} editAction={editAction}
                            deleteAction={deleteAction}
                            posts={posts}/>
+                </div>
+                <div className="table mt-8 flex w-full">
+                    <AuthorTable isLoading={isLoadingAuthors || isFetchingAuthors} authors={authors}/>
                 </div>
                 <ReactQueryDevtools initialIsOpen/>
             </>

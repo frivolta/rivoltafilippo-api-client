@@ -5,15 +5,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import {usePostForm} from "../../hooks/useForm";
 import {useCreatePost} from "../../api/post.api/createPost";
 import {PostTable} from "../../components/PostTable/PostTable";
+import {useAllAuthors} from "../../api/author.api/getAllAuthors";
 
 export const CreatePost = () => {
     const {state, actions} = usePostForm()
     const {mutate} = useCreatePost()
+    const {data: authors} = useAllAuthors()
+
 
     const handleCreatePost = () => {
         const isValid = actions.validateForm()
         if (isValid) {
-            mutate({...actions.getPayload()})
+            mutate({...actions.getPayload(), ...(authors && {author: authors[0]})})
         }
     }
 
