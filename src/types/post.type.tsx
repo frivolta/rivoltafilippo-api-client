@@ -3,6 +3,7 @@ export interface Post {
     createdAt: string;
     updatedAt: string;
     title: string;
+    excerpt: string;
     slug: string;
     content: string;
     mediumUrl?: string;
@@ -12,12 +13,11 @@ export interface Post {
     isDraft: boolean;
 }
 
-export interface CreatePostInput extends Omit<Post, "createdAt"|"publishedAt"|"updatedAt"|"id">{
-    publishedAt: Date
+export interface CreatePostInput extends Omit<Post, "createdAt" | "updatedAt" | "id"> {
 }
 
-export interface UpdatePostInput extends Omit<Post, "createdAt"|"publishedAt"|"updatedAt">{
-    publishedAt: Date
+export interface UpdatePostInput extends Omit<Post, "createdAt" | "updatedAt"> {
+
 }
 
 export interface GetPostInput {

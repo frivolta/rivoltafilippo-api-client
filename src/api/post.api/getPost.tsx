@@ -7,7 +7,7 @@ interface GetPostApi {
 }
 
 export const fetchPost = async (getPostInput: GetPostInput): Promise<Post> => {
-    const {data} = await axios.get<GetPostApi>(`${process.env.REACT_APP_API_URL}/posts/${getPostInput.id}`)
+    const {data} = await axios.get<GetPostApi>(`${process.env.REACT_APP_API_URL}/posts/id/${getPostInput.id}`)
     return data.post
 }
 

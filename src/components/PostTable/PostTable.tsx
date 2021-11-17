@@ -6,13 +6,13 @@ import React from "react";
 import {FormState} from "../../hooks/useForm";
 import {FloatButton} from "../Buttons/FloatButton";
 
-interface PostTableProps{
+interface PostTableProps {
     state: FormState
-    editField: (fName: keyof FormState, fValue: string | boolean | Date)=>void
-    postAction: ()=>void
+    editField: (fName: keyof FormState, fValue: string | boolean | Date) => void
+    postAction: () => void
 }
 
-export const PostTable = ({state, editField, postAction}:PostTableProps) => {
+export const PostTable = ({state, editField, postAction}: PostTableProps) => {
     return (
         <div data-testid="post-table" className="border-secondaryLight border-2 border-altWhite px-10 py-10">
             <FormGroup>
@@ -21,11 +21,18 @@ export const PostTable = ({state, editField, postAction}:PostTableProps) => {
                        error={state.title.error}
                        label="Post title"/>
             </FormGroup>
+
             <FormGroup>
                 <Input value={state.slug.value} onChange={(ev) => editField("slug", ev.target.value)}
                        placeholder="post-slug" type="text" data-testid="post-slug-field"
                        error={state.slug.error}
                        label="Slug"/>
+            </FormGroup>
+            <FormGroup>
+                <Input value={state.excerpt.value} onChange={(ev) => editField("excerpt", ev.target.value)}
+                       placeholder="post-excerpt" type="text" data-testid="post-excerpt-field"
+                       error={state.excerpt.error}
+                       label="Excerpt"/>
             </FormGroup>
             <FormGroup>
                 <Input value={state.image.value} onChange={(ev) => editField("image", ev.target.value)}
@@ -38,6 +45,7 @@ export const PostTable = ({state, editField, postAction}:PostTableProps) => {
                     <label data-testid="date-label" className="text-textLight font-normal text-primary">Published
                         date</label>
                     <DatePicker selected={state.date.value}
+                                dateFormat="dd/MM/yyyy"
                                 onChange={(date: any) => editField("date", date)}
                                 className="my-4 p-3 w-full text-textLight font-light font-normal rounded-md border border-secondaryLighter focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent"
                                 calendarClassName="w-full flex bg-red-500"
@@ -72,6 +80,6 @@ export const PostTable = ({state, editField, postAction}:PostTableProps) => {
             </FormGroup>
             <FloatButton label="Save Post <3" data-testid="create-post-button" onClick={postAction}/>
         </div>
-  )
+    )
 
 }

@@ -23,7 +23,7 @@ export const handlers = [
         }
     ),
     rest.get(
-        '*/posts/1',
+        '*/posts/id/1',
         (req, res, ctx) => {
             return res(
                 ctx.status(200),
